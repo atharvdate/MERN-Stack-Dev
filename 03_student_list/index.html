@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student List Manager</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2ff, #c7d2fe);
+      min-height: 100vh;
+      display: flex; justify-content: center; align-items: flex-start;
+      padding: 50px 20px;
+    }
+    .box {
+      background: white; padding: 32px;
+      border-radius: 16px; width: 420px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    }
+    h2 { text-align: center; color: #312e81; margin-bottom: 24px; }
+    .input-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    input[type="text"] {
+      flex: 1; padding: 11px 14px;
+      border: 2px solid #e0e7ff; border-radius: 10px; font-size: 14px;
+    }
+    input:focus { outline: none; border-color: #6366f1; }
+    button.add {
+      background: #6366f1; color: white; border: none;
+      border-radius: 10px; padding: 11px 20px; cursor: pointer; font-size: 14px; font-weight: 600;
+    }
+    button.add:hover { background: #4f46e5; }
+    .count { font-size: 13px; color: #6b7280; margin-bottom: 12px; }
+    .count span { font-weight: 700; color: #6366f1; }
+    ul { padding: 0; list-style: none; }
+    li {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; margin-bottom: 10px;
+      background: #f5f3ff; border-radius: 10px;
+      border: 1px solid #ddd6fe; transition: all 0.2s;
+    }
+    li:hover { border-color: #6366f1; }
+    .student-info { display: flex; align-items: center; gap: 10px; }
+    .avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: #6366f1; color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px;
+    }
+    .name { font-size: 15px; color: #1e1b4b; font-weight: 500; }
+    li button {
+      background: #ef4444; color: white; border: none;
+      border-radius: 7px; padding: 5px 12px; cursor: pointer; font-size: 13px;
+    }
+    li button:hover { background: #dc2626; }
+    .empty { text-align: center; color: #a0aec0; padding: 24px; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h2>🎓 Student List Manager</h2>
+  <div class="input-row">
+    <input type="text" id="nameInput" placeholder="Enter student name" onkeydown="if(event.key==='Enter') addStudent()">
+    <button class="add" onclick="addStudent()">Add</button>
+  </div>
+  <div class="count">Total Students: <span id="count">0</span></div>
+  <ul id="studentList"><li class="empty">No students added yet.</li></ul>
+</div>
+
+<script>
+  let students = [];
+
+  function addStudent() {
+    const input = document.getElementById('nameInput');
+    const name = input.value.trim();
+    if (!name) return;
+    students.push(name);
+    input.value = '';
+    renderList();
+  }
+
+  function deleteStudent(index) {
+    students.splice(index, 1);
+    renderList();
+  }
+
+  function renderList() {
+    const ul = document.getElementById('studentList');
+    document.getElementById('count').textContent = students.length;
+    if (students.length === 0) {
+      ul.innerHTML = '<li class="empty">No students added yet.</li>';
+      return;
+    }
+    ul.innerHTML = students.map((name, i) => `
+      <li>
+        <div class="student-info">
+          <div class="avatar">${name.charAt(0).toUpperCase()}</div>
+          <span class="name">${name}</span>
+        </div>
+        <button onclick="deleteStudent(${i})">Delete</button>
+      </li>`).join('');
+  }
+</script>
+</body>
+</html>

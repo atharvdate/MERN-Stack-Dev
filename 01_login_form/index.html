@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .form-box {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      width: 340px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 28px;
+      color: #333;
+      font-size: 24px;
+    }
+    .field { margin-bottom: 18px; }
+    label { display: block; margin-bottom: 6px; font-size: 13px; color: #555; font-weight: 600; }
+    input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+    input:focus { outline: none; border-color: #667eea; }
+    .error { color: #e53e3e; font-size: 12px; margin-top: 5px; display: block; min-height: 16px; }
+    button {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+    .success {
+      display: none;
+      background: #c6f6d5;
+      color: #276749;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+<div class="form-box">
+  <h2>🔐 Login</h2>
+  <div class="field">
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Enter username">
+    <span class="error" id="usernameError"></span>
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter password">
+    <span class="error" id="passwordError"></span>
+  </div>
+  <button onclick="validateForm()">Login</button>
+  <div class="success" id="successMsg">✅ Login Successful!</div>
+</div>
+
+<script>
+  function validateForm() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    let valid = true;
+
+    document.getElementById('usernameError').textContent = '';
+    document.getElementById('passwordError').textContent = '';
+    document.getElementById('successMsg').style.display = 'none';
+
+    if (username.length < 5) {
+      document.getElementById('usernameError').textContent = 'Username must be at least 5 characters.';
+      valid = false;
+    }
+    if (password.length < 6) {
+      document.getElementById('passwordError').textContent = 'Password must be at least 6 characters.';
+      valid = false;
+    } else if (!/\d/.test(password)) {
+      document.getElementById('passwordError').textContent = 'Password must contain at least one number.';
+      valid = false;
+    }
+
+    if (valid) {
+      document.getElementById('successMsg').style.display = 'block';
+    }
+  }
+</script>
+</body>
+</html>
